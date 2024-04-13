@@ -1,4 +1,6 @@
 ﻿using Application.Features.Brands.Commands.Create;
+using Application.Features.Brands.Commands.Delete;
+using Application.Features.Brands.Commands.Update;
 using Application.Features.Brands.Queries.GetById;
 using Application.Features.Brands.Queries.GetList;
 using Core.Application.Request;
@@ -37,9 +39,22 @@ namespace WebApi.Controllers
             {
                 Id = id
             };
-           GetByIdBrandResponse response = await Mediator.Send(getListByIdBrandQuery);
+            GetByIdBrandResponse response = await Mediator.Send(getListByIdBrandQuery);
             return Ok(response);
 
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateBrandCommand updateBrandCommand)
+        {
+            UpdatedBrandResponse response = await Mediator.Send(updateBrandCommand);
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] DeleteBrandCommand deleteBrandCommand)
+        {
+            DeletedBrandResponse response = await Mediator.Send(deleteBrandCommand);
+            return Ok(response);
         }
     }
 }
