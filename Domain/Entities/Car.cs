@@ -12,6 +12,7 @@ public class Car : Entity<Guid>
     public short MinFindexScore { get; set; }
     public CarState CarState { get; set; }
 
+
     public virtual Model? Model { get; set; }
 
     public Car()

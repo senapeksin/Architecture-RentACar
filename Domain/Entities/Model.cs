@@ -15,11 +15,14 @@ public class Model : Entity<Guid>
     public virtual Brand? Brand { get; set; }
     public virtual Fuel? Fuel { get; set; }
     public virtual Transmission? Transmission { get; set; }
+
     public virtual ICollection<Car> Cars { get; set; }
+
     public Model()
     {
         Cars = new HashSet<Car>();
     }
+
     public Model(Guid id, Guid brandId, Guid fuelId, Guid transmissionId, string name, decimal dailyPrice, string imageUrl) : this()
     {
         Id = id;
@@ -29,5 +32,6 @@ public class Model : Entity<Guid>
         Name = name;
         DailyPrice = dailyPrice;
         ImageUrl = imageUrl;
+
     }
 }
