@@ -7,11 +7,11 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Models.Queries.GetList;
+namespace Application.Features.Models.Queries.GetList;
 
 public class GetListModelQuery : IRequest<GetListResponse<GetListModelListItemDto>>
 {
-    public PageRequest  PageRequest { get; set; }
+    public PageRequest PageRequest { get; set; }
 
     public class GetListModelQueryHandler : IRequestHandler<GetListModelQuery, GetListResponse<GetListModelListItemDto>>
     {
@@ -26,11 +26,9 @@ public class GetListModelQuery : IRequest<GetListResponse<GetListModelListItemDt
 
         public async Task<GetListResponse<GetListModelListItemDto>> Handle(GetListModelQuery request, CancellationToken cancellationToken)
         {
-           Paginate<Model>  models = await _modelRepository.GetListAsync(
-                include: m=>m.Include(m=>m.Brand).Include(m=>m.Fuel).Include(m=>m.Transmission),
-                index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize 
-                );
+            Paginate<Model> models = await _modelRepository.GetListAsync(include: m => m.Include(m => m.Brand).Include(m => m.Fuel).Include(m => m.Transmission),
+                                                                         index: request.PageRequest.PageIndex,
+                                                                         size: request.PageRequest.PageSize);
 
             var response = _mapper.Map<GetListResponse<GetListModelListItemDto>>(models);
             return response;
