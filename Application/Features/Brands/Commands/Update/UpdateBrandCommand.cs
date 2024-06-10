@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 
@@ -10,10 +11,16 @@ public class UpdateBrandCommand : IRequest<UpdatedBrandResponse>
     public Guid Id { get; set; }
     public string Name { get; set; }
 
-    public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand, UpdatedBrandResponse>
+    public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand, UpdatedBrandResponse>, ICacheRemoverRequest
     {
         private readonly IMapper _mapper;
         private readonly IBrandRepository _brandRepository;
+
+        public string CacheKey => "UpdateBrandCommandHandler";
+
+        public bool ByPassCache => false;
+
+        public string? CacheGroupKey => "GetBrands";
 
         public UpdateBrandCommandHandler(IMapper mapper, IBrandRepository brandRepository)
         {

@@ -12,9 +12,11 @@ public class CreateBrandCommand : IRequest<CreatedBrandResponse>, ITransactional
 {
     public string Name { get; set; }
 
-    public string CacheKey => throw new NotImplementedException();
+    public string CacheKey => "";
 
-    public bool ByPassCache { get; }
+    public bool ByPassCache => false;
+
+    public string? CacheGroupKey => "GetBrands";
 
     public class CreateBrandCommmandHandler : IRequestHandler<CreateBrandCommand, CreatedBrandResponse>
     {
